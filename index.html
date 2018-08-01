@@ -70,14 +70,24 @@
             function timerCallback() {
             
             var currentdate = new Date(); 
+            var hours;
+
             if(currentdate.getHours() > 12) {
-                var datetime = "H" + (currentdate.getHours()-12) + "M"  
+                hours = (currentdate.getHours()-12);
+                if (hours < 10) {
+                    hours = "0" + hours;
+                }
+                var datetime = "H" + hours + "M"  
                             + currentdate.getMinutes() + "S" 
                             + currentdate.getSeconds();
                         
                 send(datetime);
             } else {
-                var datetime = "H" + currentdate.getHours() + "M"  
+                hours = (currentdate.getHours());
+                if (hours < 10) {
+                    hours = "0" + hours;
+                }
+                var datetime = "H" + hours + "M"  
                             + currentdate.getMinutes() + "S" 
                             + currentdate.getSeconds();
                         
