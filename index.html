@@ -63,17 +63,18 @@
 
     </div>
 
-    <script src="js/BluetoothTerminal.js">
-        var intervalID = window.setInterval(timerCallback, 30000);
+    <script src="js/BluetoothTerminal.js"></script>
+    <script> 
+            var intervalID = window.setInterval(timerCallback, 30000);
 
-        function timerCallback() {
+            function timerCallback() {
             
-        var currentdate = new Date(); 
-        var datetime = "H" + currentdate.getHours() + "M"  
-                        + currentdate.getMinutes() + "S" 
-                        + currentdate.getSeconds();
-
-        send(datetime);
+            var currentdate = new Date(); 
+            var datetime = "H" + currentdate.getHours() + "M"  
+                            + currentdate.getMinutes() + "S" 
+                            + currentdate.getSeconds();
+                        
+            send(datetime);
         }
     </script>
     <script src="js/main.js"></script>
