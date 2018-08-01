@@ -70,11 +70,20 @@
             function timerCallback() {
             
             var currentdate = new Date(); 
-            var datetime = "H" + currentdate.getHours() + "M"  
+            if(currentdate.getHours() > 12) {
+                var datetime = "H" + (currentdate.getHours()-12) + "M"  
                             + currentdate.getMinutes() + "S" 
                             + currentdate.getSeconds();
                         
-            send(datetime);
+                send(datetime);
+            } else {
+                var datetime = "H" + currentdate.getHours() + "M"  
+                            + currentdate.getMinutes() + "S" 
+                            + currentdate.getSeconds();
+                        
+                send(datetime);
+            }
+            
         }
     </script>
     <script src="js/main.js"></script>
