@@ -91,15 +91,29 @@
                             + currentdate.getMinutes() + "S" 
                             + currentdate.getSeconds();
                 var dataFull = datetime;
-                $.ajax({
-                    async: true,
-                    type: "GET",
-                    url: "https://www.bitstamp.net/api/ticker/",
-                    success: function(result) {
-                        data = result.last;
-                        dataFull = dataFull + data;
+                
+                var xmlhttp = new XMLHttpRequest();
+                var url = "https://api.coindesk.com/v1/bpi/currentprice.json";
+        
+                xmlhttp.onreadystatechange = function() {
+    
+                    if (this.readyState == 4  &&  this.status == 200) {
+                        var json = JSON.parse(this.responseText);
+                        parseJson(json);
+                    }     
+                };
+
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+
+                function parseJson(json) {
+                    var usdValue = "$" + json["bpi"]["USD"]["rate"];
+                    for(var i = 0; i < usdValue.length) {
+                        usdValue = usdValue.slice(9 - usdValue.length);
                     }
-                });
+                }
+
+                dataFull = dataFull + usdValue;
                         
                 send(dataFull);
             }
