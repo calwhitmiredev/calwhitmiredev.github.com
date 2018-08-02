@@ -91,29 +91,19 @@
                             + currentdate.getMinutes() + "S" 
                             + currentdate.getSeconds();
                 var dataFull = datetime;
-                
-                var xmlhttp = new XMLHttpRequest();
-                var url = "https://api.coindesk.com/v1/bpi/currentprice.json";
-        
-                xmlhttp.onreadystatechange = function() {
-    
-                    if (this.readyState == 4  &&  this.status == 200) {
-                        var json = JSON.parse(this.responseText);
-                        parseJson(json);
-                    }     
+
+                var currentPrice = new XMLHttpRequest();
+
+                currentPrice.open('GET', 'https://api.gdax.com/products/BTC-USD/book', true);
+                currentPrice.onreadystatechange = function(){
+                    if(currentPrice.readyState == 4){
+                        var ticker = JSON.parse(currentPrice.responseText);
+                        var price = ticker.bids[0][0];
+                        var usdPrice = "$" + price;
+                        dataFull = dataFull + "B" + usdPrice;
+                    };
                 };
-
-                xmlhttp.open("GET", url, true);
-                xmlhttp.send();
-
-                function parseJson(json) {
-                    var usdValue = "$" + json["bpi"]["USD"]["rate"];
-                    for(var i = 0; i < usdValue.length) {
-                        usdValue = usdValue.slice(9 - usdValue.length);
-                    }
-                }
-
-                dataFull = dataFull + usdValue;
+                currentPrice.send();
                         
                 send(dataFull);
             }
