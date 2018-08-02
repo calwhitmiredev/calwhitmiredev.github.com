@@ -49,7 +49,7 @@
 
         </div>
 
-        <div id="terminal" class="terminal"></div>
+        <!-- <div id="terminal" class="terminal"></div>
 
         <form id="send-form" class="send-form">
 
@@ -59,56 +59,76 @@
                 <i class="material-icons">send</i>
             </button>
 
-        </form>
+        </form> -->
+        Digital Clock Face: <input type="checkbox" id="check" onclick="clickFunction()">
+
         <p id="btc"></p>
     </div>
 
     <script src="js/BluetoothTerminal.js"></script>
     <script> 
+
+            var dig = false;
+
+            function clickFunction() {
+                var checkBox = document.getElementById("check");
+                var text = document.getElementById("text");
+
+                if (checkBox.checked == true){
+                    dig = true;
+                } else {
+                    dig = false;
+                }
+            }
+
             var intervalID = window.setInterval(timerCallback, 30000);
 
             function timerCallback() {
             
-            var currentdate = new Date(); 
-            var hours;
+                var currentdate = new Date(); 
+                var hours;
 
-            if(currentdate.getHours() > 12) {
-                hours = (currentdate.getHours()-12);
-                if (hours < 10) {
-                    hours = "0" + hours;
-                }
-                var datetime = "H" + hours + "M"  
-                            + currentdate.getMinutes() + "S" 
-                            + currentdate.getSeconds();
+                if(currentdate.getHours() > 12) {
+                    hours = (currentdate.getHours()-12);
+                    if (hours < 10) {
+                        hours = "0" + hours;
+                    }
+                    var datetime = "H" + hours + "M"  
+                                + currentdate.getMinutes() + "S" 
+                                + currentdate.getSeconds();
                         
-                send(datetime);
-            } else {
-                hours = (currentdate.getHours());
-                if (hours < 10) {
-                    hours = "0" + hours;
-                }
-                var datetime = "H" + hours + "M"  
-                            + currentdate.getMinutes() + "S" 
-                            + currentdate.getSeconds();
-                var dataFull = datetime;
+                    send(datetime);
+                } else {
+                    hours = (currentdate.getHours());
+                    if (hours < 10) {
+                        hours = "0" + hours;
+                    }
+                    var datetime = "H" + hours + "M"  
+                                + currentdate.getMinutes() + "S" 
+                                + currentdate.getSeconds();
+                    var dataFull = datetime;
 
-                var currentPrice = new XMLHttpRequest();
+                    var currentPrice = new XMLHttpRequest();
 
-                currentPrice.open('GET', 'https://api.gdax.com/products/BTC-USD/book', true);
-                currentPrice.onreadystatechange = function(){
-                    if(currentPrice.readyState == 4){
-                        var ticker = JSON.parse(currentPrice.responseText);
-                        var price = ticker.bids[0][0];
-                        document.getElementById('btc').innerHTML = "B$" + price;
+                    currentPrice.open('GET', 'https://api.gdax.com/products/BTC-USD/book', true);
+                    currentPrice.onreadystatechange = function(){
+                        if(currentPrice.readyState == 4){
+                            var ticker = JSON.parse(currentPrice.responseText);
+                            var price = ticker.bids[0][0];
+                            document.getElementById('btc').innerHTML = "B$" + price;
+                        };
                     };
-                };
-                currentPrice.send();
-                dataFull = dataFull + document.getElementById("btc").textContent;
-                console.log(dataFull);
-                send(dataFull);
+                    currentPrice.send();
+                    if(dig) {
+                        dataFull = dataFull + "D";
+                    } else {
+                        dataFull = dataFull + "C";
+                    }
+                    dataFull = dataFull + document.getElementById("btc").textContent;
+                    console.log(dataFull);
+                    send(dataFull);
+                }
             }
-            
-        }
     </script>
     <script src="js/main.js"></script>
     <script src="js/companion.js" data-service-worker="sw.js"></script>
