@@ -90,8 +90,18 @@
                 var datetime = "H" + hours + "M"  
                             + currentdate.getMinutes() + "S" 
                             + currentdate.getSeconds();
+                var dataFull = datetime;
+                $.ajax({
+                    async: true,
+                    type: "GET",
+                    url: "https://www.bitstamp.net/api/ticker/",
+                    success: function(result) {
+                        data = result.last;
+                        dataFull = dataFull + data;
+                    }
+                });
                         
-                send(datetime);
+                send(dataFull);
             }
             
         }
