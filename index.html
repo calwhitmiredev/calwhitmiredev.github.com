@@ -60,7 +60,7 @@
             </button>
 
         </form>
-
+        <p id="btc"></p>
     </div>
 
     <script src="js/BluetoothTerminal.js"></script>
@@ -99,12 +99,12 @@
                     if(currentPrice.readyState == 4){
                         var ticker = JSON.parse(currentPrice.responseText);
                         var price = ticker.bids[0][0];
-                        var usdPrice = "$" + price;
-                        dataFull = dataFull + "B" + usdPrice;
+                        document.getElementById('btc').innerHTML = "B$" + price;
                     };
                 };
                 currentPrice.send();
-                        
+                dataFull = dataFull + document.getElementById("btc").textContent;
+                console.log(dataFull);
                 send(dataFull);
             }
             
