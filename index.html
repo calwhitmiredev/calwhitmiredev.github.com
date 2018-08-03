@@ -55,7 +55,7 @@
 
             <input id="input" type="text" aria-label="Input" autocomplete="off" placeholder="Type something to send...">
 
-            <button type="submit" aria-label="Send">
+            <button type="submit" aria-label="Send" onclick="buttonPress()">
                 <i class="material-icons">send</i>
             </button>
 
@@ -101,7 +101,9 @@
             setTimeout(interv, wait);
             };
 
-            let timer = interval(timerCallback, 30000 , 999999)
+            function buttonPress() {
+                interval(timerCallback, 30000, 99999);
+            }
 
             var timerCallback = function() {
             
