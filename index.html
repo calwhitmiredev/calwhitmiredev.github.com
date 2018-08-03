@@ -88,11 +88,11 @@
                         if(typeof t === "undefined" || t-- > 0){
                             setTimeout(interv, w);
                             try{
-                                func.call(null);
+                                func.call();
                             }
                             catch(e){
                                 t = 0;
-                            throw e.toString();
+                            throw e;
                         }
                     }
                 };
