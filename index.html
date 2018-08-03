@@ -87,6 +87,7 @@
             function timerCallback() {
             
                 var currentdate = new Date(); 
+                var dataFull' = datetime;'
                 var hours;
                 console.log("0");
                 if(currentdate.getHours() > 12) {
@@ -99,8 +100,7 @@
                                 + currentdate.getSeconds();
                     console.log("1");
                     dataFull = datetime;
-                    console.log(datetime);
-                        
+                    console.log(dataFull);
                 } else {
                     hours = (currentdate.getHours());
                     if (hours < 10) {
@@ -109,9 +109,9 @@
                     var datetime = "H" + hours + "M"  
                                 + currentdate.getMinutes() + "S" 
                                 + currentdate.getSeconds();
-                    var dataFull = datetime;
+                    dataFull = dataTime;
                     console.log("2");
-                    console.log(datetime);
+                    console.log(dataFull);
                 }
                 var currentPrice = new XMLHttpRequest();
                 console.log("3");
